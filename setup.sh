@@ -54,3 +54,6 @@ else
   pacman -S zsh-syntax-highlighting
 fi
 
+
+SCRIPTDIR=`$(dirname "${0}")`
+cp $SCRIPTDIR/.config/* $HOME/.config
