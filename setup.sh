@@ -41,7 +41,7 @@ if type packer-color >/dev/null 2>&1; then
   echo "packer-color already installed" 
 else
   echo "installing packer-color..." 
-  pacman -S packer-color
+  apacman -S packer-color
 fi
 
 CHECK=`ls /usr/share/zsh/plugins`
@@ -54,6 +54,10 @@ else
   pacman -S zsh-syntax-highlighting
 fi
 
+
+echo "installing .config files:"
+#ls $SCRIPTDIR/.config
+#echo $0
 
 SCRIPTDIR=`$(dirname "${0}")`
 cp $SCRIPTDIR/.config/* $HOME/.config

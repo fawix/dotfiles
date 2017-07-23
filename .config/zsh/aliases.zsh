@@ -1,5 +1,5 @@
 # reload zsh config
-alias zreload='source ~/.zshrc'
+alias zreload='source $ZDOTDIR/.zshrc'
 
 # Filesystem aliases
 alias ..='cd ..'
