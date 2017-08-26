@@ -8,9 +8,19 @@
 ##
 
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-export XDG_CONFIG_HOME=$HOME/.config
-export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
+if [ ! -f  /etc/zsh/zshenv ]; then
+
+    mkdir -p /etc/zsh
+    touch /etc/zsh/zshenv
+    
+    echo 'export XDG_CONFIG_HOME=$HOME/.config' >> /etc/zsh/zshenv
+    echo 'export ZDOTDIR=$XDG_CONFIG_HOME/zsh' >> /etc/zsh/zshenv
+
+    echo "file /etc/zsh/zshenv created.."
+else
+    echo "file /etc/zsh/zshenv already exists, skipping..."
+fi
 
 if type git >/dev/null 2>&1; then 
   echo "git already installed" 
@@ -54,10 +64,10 @@ else
   pacman -S zsh-syntax-highlighting
 fi
 
-
-echo "installing .config files:"
-#ls $SCRIPTDIR/.config
-#echo $0
-
+#
+#echo "installing .config files:"
+##ls $SCRIPTDIR/.config
+##echo $0
+#
 SCRIPTDIR=`$(dirname "${0}")`
 cp $SCRIPTDIR/.config/* $HOME/.config
