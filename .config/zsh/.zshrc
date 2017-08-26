@@ -8,8 +8,8 @@ export REPORTTIME=10
 
 # Configure history file and size
 HISTFILE=$ZDOTDIR/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 
 # Completion (compinit)  and colored theme (promptinit)
 autoload -Uz compinit promptinit
