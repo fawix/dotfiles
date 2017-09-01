@@ -20,6 +20,7 @@ if [ ! -f  /etc/zsh/zshenv ]; then
     echo "file /etc/zsh/zshenv created.."
 else
     echo "file /etc/zsh/zshenv already exists, skipping..."
+	#TODO Validate that file actually contain environments variables above
 fi
 
 if type git >/dev/null 2>&1; then 
@@ -64,10 +65,25 @@ else
   pacman -S zsh-syntax-highlighting
 fi
 
-#
-#echo "installing .config files:"
-##ls $SCRIPTDIR/.config
-##echo $0
-#
-SCRIPTDIR=`$(dirname "${0}")`
-cp $SCRIPTDIR/.config/* $HOME/.config
+
+#TODO validate if file exists or were changed before copying??
+
+#echo $0
+
+# It is my to override all the files
+# in case the .zshrc file is not present in the folder
+# makes for an easy update / cleanup
+if [ ! -f  $ZDOTDIR/.zshrc ]; then
+
+	SCRIPTDIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+	echo "adding .config files:"
+	ls $SCRIPTDIR/.config/zsh/*
+	cp -r "$SCRIPTDIR/.config/zsh" "$XDG_CONFIG_HOME"
+
+    echo "done adding ZSH files"
+else
+    echo "file $ZDOTDIR/.zshrc already exists, skipping..."
+fi
+
+
