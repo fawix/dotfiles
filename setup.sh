@@ -66,24 +66,41 @@ else
 fi
 
 
-#TODO validate if file exists or were changed before copying??
-
-#echo $0
-
-# It is my to override all the files
+# It is my intent to override all the files
 # in case the .zshrc file is not present in the folder
 # makes for an easy update / cleanup
+SCRIPTDIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 if [ ! -f  $ZDOTDIR/.zshrc ]; then
 
-	SCRIPTDIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-	echo "adding .config files:"
+	echo "adding .config/zsh files:"
 	ls $SCRIPTDIR/.config/zsh/*
 	cp -r "$SCRIPTDIR/.config/zsh" "$XDG_CONFIG_HOME"
 
-    echo "done adding ZSH files"
+    echo "done adding zsh config files"
 else
-    echo "file $ZDOTDIR/.zshrc already exists, skipping..."
+    echo "file $ZDOTDIR/.zshrc already exists, skipping zsh config files..."
 fi
 
+
+if type nvim >/dev/null 2>&1; then 
+  echo "neovim already installed" 
+else
+  echo "installing neovim and symlinks..." 
+  pacman -S neovim neovim-symlinks
+fi
+
+# copy files only if init.vim is not present in the nvim folder
+echo "$XDG_CONFIG_HOME/nvim/init.vim"
+if [ ! -f  $XDG_CONFIG_HOME/nvim/init.vim ]; then
+
+	echo "adding .config/nvim files:"
+	ls $SCRIPTDIR/.config/nvim/*
+	cp -r "$SCRIPTDIR/.config/nvim" "$XDG_CONFIG_HOME"
+
+    echo "done adding nvim config files"
+else
+    echo "file $nvim_home/ini.vim already exists, skipping nvim config files..."
+fi
 
