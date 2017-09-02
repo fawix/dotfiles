@@ -1,8 +1,18 @@
 ### TODO
-#export thevarious environment variables
-#move as much as I can to ~/.config
+# export the various environment variables
+# move as much as I can to ~/.config
 #
-#
+#export GNUPGHOME=~/.config/gnupg
+#export ZDOTDIR=~/.config/zsh
+#export tmux???
+#base16 (maybe)
+#what else?
+
+
+# Base16 Shell
+#BASE16_SHELL="$HOME/.config/base16-shell/scripts/base16-default-dark.sh"
+#[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
 # display how long all tasks over 10 seconds take
 export REPORTTIME=10
 
@@ -17,6 +27,7 @@ compinit
 promptinit
 
 # LS_COLORS
+# From: https://github.com/trapd00r/LS_COLORS
 # To color the output of ls
 #if [ "$TERM" = "xterm-256color" ]; then
 #  eval $( dircolors -b $HOME/.config/theme/.dircolors )
@@ -37,14 +48,14 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
+# TODO update to use keybind command create a .zkbd file etc... 
 
 
-# Add zsh-syntax-highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-## TODO 
-# remember last dir
-#
+# CDR - remember last visited folders
+# to use do cdr -l and then cd <NUM>
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':completion:*:*:cdr:*:*' menu selection
 
 
 # Navigation keys
@@ -53,6 +64,7 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # - Ctrl+Right Arrow   : go foward one word
 # - Ctrl+Left Arrow    : go back one word
 #
+# TODO update to use keybind command 
 bindkey '^[[1;5D' backward-word 
 bindkey '^[[1;5C' forward-word
 bindkey '^[[H' beginning-of-line
@@ -60,6 +72,10 @@ bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 
 
+## Source other configuration files:
+
+# Add zsh-syntax-highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # source all .zsh files inside of the zsh/ directory
 # Currently this will source:
@@ -67,6 +83,5 @@ bindkey '^[[3~' delete-char
 # - COLORS
 # - FUNCTIONS 
 # - ALIASES
-export ZSH=$HOME/.config/zsh
-for config ($ZSH/**/*.zsh) source $config
+for config ($ZDOTDIR/**/*.zsh) source $config
 
